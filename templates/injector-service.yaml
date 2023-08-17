@@ -8,7 +8,7 @@ SPDX-License-Identifier: MPL-2.0
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "vault.fullname" . }}-injector-svc
+  name: {{ template "vault.name" . }}-injector-svc
   namespace: {{ include "vault.namespace" . }}
   labels:
     app.kubernetes.io/name: {{ include "vault.name" . }}-agent-injector

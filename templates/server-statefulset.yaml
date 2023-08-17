@@ -11,7 +11,7 @@ SPDX-License-Identifier: MPL-2.0
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ template "vault.fullname" . }}
+  name: {{ template "vault.name" . }}
   namespace: {{ include "vault.namespace" . }}
   labels:
     app.kubernetes.io/name: {{ include "vault.name" . }}
@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   {{- template "vault.statefulSet.annotations" . }}
 spec:
-  serviceName: {{ template "vault.fullname" . }}-internal
+  serviceName: {{ template "vault.name" . }}-internal
   podManagementPolicy: Parallel
   replicas: {{ template "vault.replicas" . }}
   updateStrategy:
@@ -112,7 +112,7 @@ spec:
               {{- if .Values.server.ha.clusterAddr }}
               value: {{ .Values.server.ha.clusterAddr | quote }}
               {{- else }}
-              value: "https://$(HOSTNAME).{{ template "vault.fullname" . }}-internal:8201"
+              value: "https://$(HOSTNAME).{{ template "vault.name" . }}-internal:8201"
               {{- end }}
             {{- if and (eq (.Values.server.ha.raft.enabled | toString) "true") (eq (.Values.server.ha.raft.setNodeId | toString) "true") }}
             - name: VAULT_RAFT_NODE_ID
